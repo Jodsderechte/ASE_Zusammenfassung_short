@@ -398,28 +398,11 @@ Umsetzung unterscheidung in drei Arten:
 
 ## SOLID
 
-S = Single Responsibility Only
-
-O = Open-Closed Prinzip
-
-L = Liskovsches Substitutionsprinzip
-
-I = Interface Segregation Prinzip
-
-D = Dependency Inversion Prinzip
-
-**Wenn jemand im Bewerbungsgesrpäch fragt muss man wissen, dass es ein Akronym ist und für Designprinzipien steht. Noch bessern wenn man diese Kennt**
+## S = Single Responsibility
 
 ### SRP: Single Responsibility Principle
-- "Für was ist was zuständig"
-- Eine Klasse/Funktion hat nur eine Funktionalität
-
-"Es sollte nie mehr als einen Grund dafür geben, eine Klasse zu ändern"
+- Klasse/Funktion nur eine Funktionalität
 => Vermeidung von Seiteneffekten
-
-Kann auf Klassen-, Methoden- und Komponentenebene angewendet werden.
-
-> Dies ist wichtig, da wenn eine Klasse mehr als eine Zuständigkeit hat, dann werden auch diese welche bei der Nutzung dieser Klasse nicht benötigt werden implizit gekoppelt. Wenn nun eine dieser Zuständigkeiten verändert wird kann die Zuständigkeit der anderen beeinträchtigt oder behindert werden.
 
 <div style="display: flex; justify-content: space-around;">
 <img src="Bilder/SRP_Beispiel_Bevor.png" width=400>
@@ -427,122 +410,104 @@ Kann auf Klassen-, Methoden- und Komponentenebene angewendet werden.
 <img src="Bilder/SRP_Beispiel_Danach.png" width=400>
 </div>
 
-<br/>
-Auf Komponentenebene wird SRP zum Common-Closure-Prinzip
-
-Auf Architekturebene wird SRP zum Axis-of-Change-Modell
+## O = Open-Closed
 
 ### OCP = Open Closed Principle
 
-"Wie baue ich meine Software offen für Erweiterungen aber geschlossen für Veärnderungen"
-
-**Open -> Erweiterung**
-Das Verhalten eines Moduls bzw. einer Klasse soll erweitert werden können, wenn sich die Anforderungen der Anwendung ändern.
-**Closed -> Veärnderungen**
-Das Erweitern des Verhalten eines Moduls bzw. einer Klasse soll keine Änderungen am bestehenden Quellcode des Moduls beinhalten => Die ausführbare Version des Moduls/der Bibliothek bleibt unangetastet
-> Die Erweiterungen sollen die Klasse nicht kaputt machen.
-
-Änderungen sollten Lokal bleiben und keine Seiteneffekte haben.
-Wenn ein starres Design vorliegt kann eine Änderung zu einer Kaskade von Änderungen führen.
+- open = erweiterbarkeit
+- closed = keine Veärnderungen am bestehenden Quellcode notwendig (bei erweiterung)
+=> Vermeidung von Seiteneffekten
 
 <div style="display: flex; justify-content: space-around;"> 
 <img src="Bilder/OCP_Beispiel_Davor.png" width=400>
 <div width=10><p>=></p></div>
 <img src="Bilder/OCP_Beispiel_Danach.png" width = 400>
 </div>
-> In Beispiel 2 Liegt das Interface Sortierbar im model.util, da es zu dem Sortierer gehört. Wenn die Klassen den Sortierer nutzen wollen müssen sie auch das Interface unter dessen Hoheit implementieren.
 
-Zielsetzung ist es, das System so zu gestalten, dass es leicht erweiterbar ist, ohne einen zu hohen Einfluss durch Modifikatoren zuzulassen.
 Wird erreicht durch:
-- Unterteilung des Systems in Komponenten
-- Anordnung der Komponenten in einer Abhängigkeitshierarchie
+- Unterteilung in Komponenten
+- Komponenten in Abhängigkeitshierarchie
 - Komponenten niedrigerer Ebenen durch Änderungen von Komponenten höherer Hierarchien schützen
+
+
+## L = Liskovsches Substitutionsprinzip
 
 ### Liskovsches Substitutionsprinzip
 - "Leitlinie für Vererbung"
-- Unterklassen müssen immer Oberklassen substituieren können
+- Unterklassen müssen Oberklassen substituieren
+> Untergeordnete Klassen können überliegenden vollständig ersetzen
 
-Vererbung bedeutet Substituierbarkeit und sollte nicht als eine ist-ein Beziehung interpretiert werden.
+## I = Interface Segregation
 
-> Untergeordnete Klassen einer Vererbungshierarchie können die überliegenden vollständig ersetzen
 ### ISP = Interface Segregation Principle
-"Clients sollten nicht gezwungen sein von Interfaces abzuhängen, die sie nicht verwenden"
+Keine abhängigkeit von nicht verwendeten Interfaces
 
 **Unnötige Interfaceverkettungen oder große/riesige Interfaces vermeiden!**
 
->Machen sie kleine Interfaces => Interfaces sollten immer eine Rolle haben, welches das Objekt spielen kann
+Lösung = kleine Interfaces (verkörpern nur eine Eigenschaft) 
 
-Simpel heruntergebrochen soll vermieden werden, dass eine Klasse ein großes Interface mit zu vielen Eigenschaften implementieren muss obwohl nur eine Eigenschaft dieses Interface implementiert werden soll.
-Lösung = Implementierung mehrerer kleiner Interfaces die jeweils nur eine Eigenschaft verkörpern so, dass eine Klasse nur das implementiert was sie auch braucht.
+## D = Dependency Inversion
 
 ### DIP = Dependency Inversion Principle
-**Ganz wichtig!**
-"Module hoher Ebenen sollten nicht von Modulen niedrigerer Ebenen abhängen. Beide sollten von Abstraktionen abhängen."
-"Abstraktionen sollten nicht von Details abhängen => Details sollten von Abstraktionen abhängen!"
 
-Beispiel für dieses Principle = Abstract Factory
-=> Iterator weiß welche Datenstruktur vorliegt und kann passend zur Datenstruktur einen Iterator auswählen
+Keine abhänhigkeit von modulen niedriger Ebene.
 
-DIP besagt, dass Systeme, in welchen sich Quellcode-Abhängigkeiten ausschließlich auf Abstraktionen beziehen anstatt auf konkrete Realisierungen, am flexibelsten sind.
 => "High-Level"(Layer) sollen nicht von "Low-Level"(konkrete Implementierungen) abhängig sein
 
-> Dieses Prinzip uist nicht durchzuhalten! => Abhängigkeiten von stabilem konkreten Code sind erlaubt.
+> Abhängigkeiten von stabilem konkreten Code sind erlaubt.
 
 ## API-Design
-Benutzbarkeit = Leicht verstädnlich und erlernbar sein
+Benutzbarkeit = Leicht verständlich + erlernbar
 Effizienz = geringe Übertragung von Datenvolumen
-Zuverlässigkeit = Wie wird mit Fehlern umgegangen? => **Ein Fehler bei Verwendung sollte nicht in einem Absturz resultieren!**
+Zuverlässigkeit = Fehlerbehandlung
 
 **Wichtig:**
 - Konsistenz = Durchgängige Namensgebung
 - Verständlichkeit = Konventionen
-    - Getter und Setter sollten auch so benannt sein (getId(), setId(int id))
-- Eine gute API sollte schwer falsch zu benutzen sein!
-    - Eine gute API sollte nicht nur einfach zu benutzen sein, sondern auch schwer sein sie falsch zu verwenden
+    - Getter und Setter bennennen (getId(), setId(int id))
+- schwer falsch zu benutzen
 - Leaking References vermeiden
-    - Eine API sollte keine Referenzen zurückgeben (modifizierbare Interna)
-    - Wenn eine beispielsweise eine Liste zurückgegeben wird sollte entweder eine Kopie dieser zurückgegeben werden oder eine unmodifizierbare Version.
+    - keine Referenzen zurückgeben (modifizierbare Interna)
 - Keine null Rückgaben!
-    - Lieber ein eigenen Typ/Fehler zurückgeben als stumpf null
+    - eigenen Typ/Fehler zurückgeben statt null
 
 ## Weitere Konzepte
 
 ### DRY = Dont Repeat Yourself
-Ziel Redundanz vermeiden und Funktionalität zentralisieren
+Redundanz vermeiden, Funktionalität zentralisieren
 
 <img src="Bilder/DRY_Beispiel.png" width=600>
 
-**Vorsicht: Kann Abhängigkeiten einführen**
+**Kann Abhängigkeiten einführen**
 
 ### YAGNI = You Aren´t Gonna Need It
 
-Unnötiges weglassen => Erst implementieren wenn es benötigt wird 
+Unnötiges weglassen => Erst implementieren wenn benötigt
 
 ### KISS = Keep It Simple And Stupid
 
-Einfachheit ist eine erforderliche Eigenschaft von Softwaresysteme
-- Gilt für Gestaltung und Implementierung
-
-Wenn Software kompliziertet ist als sie sein muss sinkte ihre Qualität
-
-=> höhere Komplexität verringert Wartbarkeit, behindert Wiederverwendbarkeit und kann zu Zunahme der Anzahl von Fehlern führen.
+=> höhere Komplexität:
+ - verringert Wartbarkeit
+ - behindert Wiederverwendbarkeit
+ - erhöht Anzahl Fehlern 
 
 ## Fazit von Design Prinzipien
-Die Anwendung der Prinzipien führt nicht automatisch zu besserer Software. Meistens landet man bei "es kommt darauf an!" abhängig von dem jeweiligen Fall.
+führt nicht automatisch zu besserer Software: "es kommt darauf an!"
 
 # Architekturen für Verteilte Systeme
 
-Verteiltes System = Zusmmenschluss unabhängiger Computer, die sich für den Benutzer als ein einziges System präsentieren.
-- Menge interagierender Prozesse (oder Prozessoren), welche über keinen gemeinsamen Speicher verfügen und daher mit Nachrichten miteinander kommunizieren.
+Zusmmenschluss unabhängiger Computer
+- keinen gemeinsamen Speicher
+- kommunizieren mit Nachrichten
 
 ## Client-Server-System
-Viele Clients greifen auf einen oder mehrere Server zu.
+Viele Clients, ein Server
 
 ## Verteilte Anwendung
-Durch die Programmierung der Anwendung wir das verteilte System erstellt.
+Programmierung der Anwendung
 
 ## Verteiltes Betriebssystem
-Das Betriebssystem selbst ist verteilt, für Benutzer und Anwendungen ist dies nicht sichtbar.
+für Benutzer und Anwendungen nicht sichtbar
 
 ## Schichtenarchitektur
 
@@ -555,7 +520,7 @@ Das Betriebssystem selbst ist verteilt, für Benutzer und Anwendungen ist dies n
 
 <img src="Bilder/Softwareschichten_einer_Anwendung.png" width=400>
 
-> Verstecken von Komplexität nach unten (Obere Schichten können nur auf Schicht untendrunter zugreifen (z.B. durch Observer) )
+> Verstecken von Komplexität (zugriff nur eine Schicht runter)
 
 ## Monolitische Systeme
 
@@ -566,7 +531,7 @@ Das Betriebssystem selbst ist verteilt, für Benutzer und Anwendungen ist dies n
 
 ### Komplette Anwendung läuft zentral auf einem Server
 
-Interaktive Benutzung nur über "dumme" Terminals
+Interaktive Benutzung über Terminals
 
 <img src="Bilder/Monolith_zentral_auf_Server.png" width=300>
 
@@ -592,27 +557,32 @@ Vorteile
 Nachteile
 - Hohe Anforderungen an die Client-Rechner (hohe Kosten)
 - Nicht unbegrenzt skalierbar
-- Softwareverteilungsproblem: Client-Versionen müssen alle synchron gehalten werden
+- Softwareverteilungsproblem: Client-Versionen müssen synchron sein
 
 ## Verteilte-Anwendungen / Three-Tier / n-Tier Architekturen
 
 <img src="Bilder/Verteilte_Anwendungen.png" width=400>
 
-Verteilung bedeutet einfach nur, dass das Programm auf diverse Rechner verteilt wird.
-Verteilung kann sowohl Vertikal, Horizontal als auch in beiden Dimensionen erfolgen.
+Verteilung des Programms auf diverse Rechner
+kann erfolgen:
+ - Vertikal (Schichten auf unterschiedlichen Rechnern)
+ - Horizontal (Anzahl der Schichte)
+ - in beiden Dimensionen
 
-Vertikale Verteilung = Schichten liegen auf unterschiedlichen Rechnern
-Horizontale Verteilung = Anzahl der Schichten
 <img src="Bilder/Horizontal_Vertikal_verteiltes_System.png" width=400>
 
-Aufteilung in DB, Logik(Backend) und Presentation(Frontend)
-> So funktionieren die meisten Webseiten/Systeme
+Aufteilung in:
+ - DB
+ - Logik(Backend) 
+ - Presentation(Frontend)
+
 <img src="Bilder/Klassische_three_tier_Architektur.png" width=400> 
 
 
 ## Middelware
 
-Die Middleware liegt zwischen den Betriebssystemen (OS) der Rechner (Rechner A, B, C) und der verteilten Anwendung. Sie bietet Middleware-Services, die die Kommunikation und Koordination zwischen verschiedenen Rechnern in einem verteilten System ermöglichen.
+liegt zwischen OS der Rechner (Rechner A, B, C) und verteilter Anwendung 
+bietet Middleware-Services z.B.:
 
 - Namensdienst
 - Kommunikationsdienst
@@ -622,9 +592,8 @@ Die Middleware liegt zwischen den Betriebssystemen (OS) der Rechner (Rechner A, 
 - Transaktionsdienst
 - Sicherheitsdienst
 
-Zusammengefasst bieten Middleware-Services die Infrastruktur, die die Entwicklung und den Betrieb verteilter Anwendungen durch Standardfunktionen vereinfacht.
+bieten Standardfunktionen (vereinfacht verteilter Anwendungen)
 
->Die Middleware kapselt die Anwendung von den benutzten Protokollschichten
 <img src="Bilder/Middleware_OSI.png" width=300>
 
 ## Kommunikationsarten
@@ -658,21 +627,17 @@ Zusammengefasst bieten Middleware-Services die Infrastruktur, die die Entwicklun
 
 ### Kommunikationsfehler
 
-Mögliche Fehler:
-- Request geht verloren oder wird verzögert
-- Response geht verloren oder wird verzögert
-- Client oder Server sind zwischenzeitlich nicht verfügbar
+- Request verloren/verzögert
+- Response verloren/verzögert
+- Client/Server nicht verfügbar
 
-> Hier ist wichtig wie damit umgegangen wird. Wird ein Request erneut gesendet, wie lange wartet man auf die Antwort, etc.
+> Resend?, Timeout? etc.
 
 # RMI (Remote Method Invocation)
-RMI = Java-Mechanismus zur Realisierung der Interprozesskommunikation
-Mit Hilfe von RMI können Methoden entfernter Objekte aufgerufen werden
-> Ziel: Aufruf sollte dabei möglichst transparent sein
+RMI = Java-Realisierung Interprozesskommunikation
+Aufruf von Methoden entfernter Objekte
 
->**RMI nutzt Proxy Pattern**
->>Stub und Skeleton Repräsentieren die Platzhalter => Proxy
-
+>>Stub+Skeleton Repräsentieren Platzhalter => Proxy
 
 ## Architektur von RMI
 
@@ -681,58 +646,22 @@ Client = Dienstnehmer
 
 <img src="Bilder/RMI_Architektur.png">
 
-## Codebeispiel: Server 
-
-<img src="Bilder/RMI_Server_Codebeispiel.png" width=400>
-
-ExportObjekt => Erzeugt Skeleton und macht Sockel auf
-LocateRegistry.getRegistry() => Sucht Naming Service (falls dieser nicht läuft Startet dieser).
-Konvention Protokoll vorne anfügen (Bsp. "rmi://Hallo" und nicht "//Hallo")
-
-rebind() überschreibt falls es den Aufruf schon gibt
-bind() versucht Aufruf zu setzen und wirft Fehler, falls schon belegt
-
-## Codebeispiel: Client
-
-<img src="Bilder/RMI_Client_Codebeispiel.png" width=400>
-
-LocateRegistry.getRegistry() => Sucht Naming Service
-registry.lookup("rmi://Hello"); => Ruft Hello von Remote Objekt auf
-
-## Reihenfolge der Ausführung
-- Starten der rmiregistry (in Shell)
-    - rmiregistry repräsentiert Naming-Service
-    - Remote-Interfaces müssen im rmiregistry-Classpath stehen
-    - Am einfachsten startet man die rmiregistry im "Serververzeichnis"
-- Starten des Servers (in Shell)
-- Starten des Clients (in Shell)
-    
+Reihenfolge der Ausführung relevant
 
 ## Middleware bei RMI
-- Stub = Proxy => Macht Netzerkrequest 
-- Skeleton = Socketlistener = Nimmt Netzwerkrequest entgegen und verwaltet das Serverobjekt
+- Stub = Proxy => Netzerkrequest 
+- Skeleton = Socketlistener = Nimmt Netzwerkrequest entgegen + verwaltet Serverobjekt
 
-Mittleware = Vermittlungsschnittstelle welche möglichst transparent weggekapselt werden soll.
-
-Wichtig ist, dass man bei RMI bei mehreren Parallelen Zugriffen auf den Server direkt im Multithreading ist und damit Concurrency Konflikte vermeiden muss!!!
-=> **Nebenläufige Programmierung**
->Grund dafür ist, dass alle Threads Zugriff auf den Heap haben D.h. Heap-Variablen werden gemeinsam benutzt!
+Warnung: Multithreading 
 
 ## Parameterübergabe
-Bei RMI findet ein Remote Aufruf statt also ein Call by Value => Es werden Kopien des Objekts erzeugt
+Call by Value
 
 <img src="Bilder/RMI_Remote_Parameteraufruf.png" width=400>
 
-## Problem mit RMI: Request-Response
-Request-Response Muster= Client stellt Request, Server reagiert darauf (Response)
-- Server Kann Client nicht aktiv benachrichtigen
-
-**Workaround: Callback Design Pattern** 
 ## Callback Design
-
+- Server -> Client benachrichtigung
 <img src="Bilder/RMI_Callback_Design_Pattern.png" width=400>
-
-Client stellt auch Remote-Objekt zu Verfügung und gibt Server eine Referenz darauf
 
 ## Distributed Garbage Collection
 Objekt darf erst gelöscht werden, wenn:
@@ -743,40 +672,29 @@ Zusätzlich kann mit Timeout gearbeitet werden.
 
 ## Java Naming and Directory Service
 Bsp. für Naming Service = RMI_Registry
-Naming Service enthält Name-Wert-Paare
-- Namen sind eindeutig
-- Werte stellen Ressourcen bzw. Objekte dar, welche gemeinsam genutzt werden sollen.
-
-JNDI = Java Naming and Directory Interface 
-- API welches die Möglichkeit bietet, Naming und Directory Service Funktionalitäten in Java Anwendungen zu nutzen.
-
-<img src="Bilder/RMI_JNDI_Beispiel_1.png" width=500>
+Naming Service enthält Name-Value-Paare
 
 ## Alternativen für RMI
 CORBA (Common Object Request Broker Architekture)
 Probleme mit CORBA => nicht Internettauglich
 
 
-
-
 # Service Oriented Architekture (SOA)
 
+Strukturierung und Nutzung verteilter Funktionalität
+> Anwendungslandschaft aus einzelnen Anwendungen
+> - Anwendungen lose gekoppelt (bieten Funktionalitäten durch Services an)
+
 **Idee der SOA = Schnittstellen werden zu standartisierten Services umfunktioniert**
-> - allgemeine Mechanismen zur Beschreibung von Finden und Kommunikation mit Services benötigt
-> - Middleware orchestriert Services und ist selbst als Service erreichbar
+> - benötigt Mechanismen zum Finden und Kommunikation mit Services
+> - Middleware orchestriert (ist selbst als Service erreichbar)
 
 <img src="Bilder/SOA_Architektur.png" width=400>
 
-## Allg. Definition SOA
-SOA = Paradigma für die Strukturierung und Nutzung verteilter Funktionalität, die von unterschiedlichen Benutzern verantwortet wird.
-> SOA = Architekturmuster, welches den Aufbau einer Anwendungslandschaft aus einzelnen Anwendungen beschreibt.
-> - Die Anwendungen sind lose gekoppelt, indem sie ihre Funktionalitäten durch Services anbieten.
 
 # Web Services
-- XML Standarts
-    - Web-Services stellen eine Technologieplattform dar, mit deren Hilfe Servicearchitekturen realisiert werden können.
-- Web Serives basieren auf Text ("Jede Programmiersprache kann Text")
-    - Unabhängiger Aufbau durch Serialisierung/Deserialisierung von Textnachrichten
+- XML Standards
+- Textbasiert ("Jede Programmiersprache kann Text")
 
 ## Web Service Dreieck
 
@@ -785,24 +703,10 @@ SOA = Paradigma für die Strukturierung und Nutzung verteilter Funktionalität, 
 > UDDI = Universal Description, Discovery, and Integration => Naming Service
 
 ## SOAP = Simple Opject API (SOAP)
-SOPA-Spezifikation legt fest, wie Nachrichten aufgebaut sein müssen um als SOAP-Nachricht zu gelten.
+legt fest, wie Nachrichten aufgebaut sein müssen
 SOAP = Kommunikationsprotokoll (textbasiert)
 
 <img src="Bilder/Aufbau_SOAP_Nachricht.png" width=200>
-
-> Aufbau einer SOAP Nachricht
-
-```xml
-<s:envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
-    <s:body>
-        <ns2:isCreditworthy xmlns:ns2="http://bank/">
-            <arg0>Hans</arg0>
-            <arg1>100.0</arg1>
-        </ns2:isCreditworthy>
-    </s:body>
-</s:envelope>
-```
-> Beispiel einer SOAP Nachricht für einen Kreditdienst
 
 ## WSDL = Web Service Definition Language
 XML-Vokabular zur Beschreibung von Schnittstellen
@@ -813,53 +717,10 @@ WSDL beschreibt:
 - Für Protokoll relevante Informationen
 - Adressen unter denen Dienste erreichbar sind
 
-<img src="Bilder/Aufbau_WSDL_Dokument.png" width=200> 
-<table>
-<th>Element</th><th>Definition</th>
-    <tr>
-        <td>definitions</td>
-        <td>Wurzelelement</td>
-    </tr>
-    <tr>
-        <td>types</td>
-        <td>Definiert Benutzerdefinierte Datentypen</td>
-    </tr>
-    <tr>
-        <td>messages / operations</td>
-        <td>Benennt Nachrichten</td>
-    </tr>
-    <tr>
-        <td>portType</td>
-        <td>Definiert Ein- und Ausgabenachrichten</td>
-    </tr>
-    <tr>
-        <td>binding</td>
-        <td>Beschreibt Details, wie Nachrichten über das Netzwerk übertragen werden</td>
-    </tr>
-    <tr>
-        <td>service</td>
-        <td>Beschreibt die Adressierung des Web Service</td>
-    </tr>
-</table>
-
 
 ## Arten des Nachrichtenaustauschs
 
 <img src="Bilder/Arten_Des_Nachrichtenaustauschs.png">
-
-- One Way
-    - Nur eine Input-Nachricht
-- Request-Response
-    - eine Input-, eine Output-, ggf. fault-Nachricht
-- Solicit-Response
-    - Operation hat Output- und Input-Nachricht => Aktion geht von Server aus!
-- Notification
-    - Notification von Server an Client
-    - Hat nur eine Output-Nachricht
-
-
-
-
 
 
 # Java Messaging System (JMS)
@@ -873,9 +734,6 @@ graph TD;
     Client_5 <--> Message_Broker;
     Client_6 <--> Message_Broker;
 ```
->Eine, Anwendung, die auf einem Messaging System beruht, wird oft als loses gekoppeltes System bezeichnet.
-
-Messaging System wird dazu verwendet, dass mehrere Anwendungen Informationen als Nachrichten austauschen.
 - Nachricht = Paket aus Daten und Routing Informationen
 - Nachrichtenversand über MOM
 >Nachricht an Message Broker = Synchron
@@ -892,115 +750,28 @@ Messaging System wird dazu verwendet, dass mehrere Anwendungen Informationen als
 <img src="Bilder/MOM_Messaging_Modelle.png" width=400>
 
 #### Publish Subscribe (Pub/Sub)(1 -> Viele)
-Vergleichbar mit Newsletter 
-- Einer oder mehrere Publisher(Quellen) senden Messages an ein Topic
-- MOM leitet Messages an alle Subscriber(Empfänger) weiter
-    - Information wird an alle, welche das Topic aboniert haben ausgeliefert
-    - Subscriber registrieren sich bei MOM für Topics
 
 <img src="Bilder/MOM_Pub_Sub.png" width=400>
 
 #### Point to Point (P2P) (1->1)
 
-- Ein oder Mehrere Sender stellen Messages in eine Queue
-    - Nachricht kann von einem Receiver abgeholt werden (aus Queue rausnehmen)
-    - Alternativ liefert MOM Nachricht an einen Empfänger aus
-- **Eine Message wird an genau einen Empfänger ausgeliefert**
 <img src="Bilder/MOM_P2P.png" width=400>
-
->Gut skallierbar, da beliebig Receiver hinzugefügt/entfernt werden können.
-
-1. Erzeugung einer Connection
-2. Auf Connection wird eine oder mehrere Sessions erzeugt
-3. Auf Session werden eine oder mehrere Sender/Receiver erzeugt
-4. Registrierung and Queue (Nachrichten empfangen/ausliefern)
-
-Asynchrones Lesen per Observer 
-- Registrierung von Listenern (onMessage)
-    - Beim Aufruf wird ein neuer Thread gestartet (dadurch asynchron)
 
 ## Broker Varianten
 
-- Internal Broker = Der Message Broker ist direkt innerhalb der Anwendung oder des Application Servers integriert
-- External Broker = Der Message Broker wird als eigenständiger externer Service betrieben. Anwendungen verbinden sich über das Netzwerk mit diesem Broker.
-- Embedded Broker = Der Broker ist in die Anwendung selbst eingebettet, d. h., er läuft im selben Prozess wie die Anwendung.
-
-## Zusammenspiel der Komponenten (Client, JNDI, Messagebroker und Messageserver)
-
-1. Client schaut wo liegt das Messaging service (lookup) => Referenz auf JMS-Client Runtime
-2. Erzeuge Connection
-3. Erzeuge Session (Auf einer Connection können mehrere Sessions liegen)
-    - Senden/Empfangen kann unterschiedliche Quality of Service unterstützen. Diese QOS werden an der Session festgelegt.
-    - Je höher QOS ist desto aufwendiger diese Nachrichten zu senden
-4. Lookup Topic/Queue => Womit möchte ich kommunizieren
-    - Man kann auch dynamisch Topics/Queues erzeugen
-5. Erzeuge Publisher/Subscriber (Sender/Receiver)
-    - Topic Publisher/Subscriber
-    - Queue Sender/Receiver
-6. Message Handling
-
-## Kontaktaufbahme zu MOM
-
-1. MOM-System registriert einen Naming-Service
-    - sogenannte Connection-ListFactory
-    - (optional) eingerichtete Queues
-2. Über Connection-Factory wird Connection zu MOM-System erzeugt
-3. Von MOM-System wird eine Session angefordert
-    - Bei Session wird **QOS** spezifiziert
-
-### Quality of Service (QOS)
-- AUTO_ACKNOWLEDGE
-- DUPS_OK_ACKNOWLEDGE
-- CLIENT_ACKLOWLEDGE
-
-## Message Typen
-<table>
-<tr>
-<th>Text</th>
-<td>Test <br/> Playload = String</td>
-</tr>
-<tr>
-<th>Object</th>
-<td>Objekte welche serialisiert/deserialisiert werden. <br/>Klassendefinition muss bei Sender und Empfänger definiert sein.</td>
-</tr>
-<tr>
-<th>Byte</th>
-<td>primitive Datentypen(nummerisch)</td>
-</tr>
-<tr>
-<th>Stream(Streaming)</th>
-<td>Sequenz von primitiven Typen => StreamMessage respektiert die Einfügungsreihenfolge</td>
-</tr>
-<tr>
-<th>Map</th>
-<td>Name/Value-Paare-Paare</td>
-</tr>
-
-</table>
-
-### Aufbau einer Message
-Message besteht aus drei Teilen (Header, Properties und Payload)
-
-Header = wird automatisch von MOM gesetzt (Destination, DeliveryMode, Message ID, Priority ...)
-Properties = Benutzerdefinierte Properties
-Payload = Inhalt (Text, Byte, Object, etc.)
+- Internal Broker = direkt innerhalb Anwendung oder Application Servers
+- External Broker = eigenständiger externer Service
+- Embedded Broker = einbettung in Anwendung
 
 
 ## Features
 ### Selektoren
-Selektoren "Filtern" die Nachrichten auf bestimmte eigenschaften => Vorsortierung anhand der Properties => Client empfängt nur Nachrichten "wie er möchte"
+"Filtern" Nachrichten auf bestimmte eigenschaften
 
 ### Temporäre Queue
-Zwischen Sender und Empfänger kann jederzeit ein "privater" Kanal eingerichtet werden, welcher nicht im JNDI sichtbar ist.
-Die temporäre Queue wird mit in Session gegeben.
-=> Dadurch ist asynchrones Request/Response möglich
+"privater" Kanal 
+=> asynchrones Request/Response möglich
 
-### Weitere
-Nachrichten können transient (default) oder persistent(Nachricht wird gehalten bis Empfänger da ist) sein
-- Meistens mit Gültigkeitsdatum um nicht ewig zu halten
-
-Nachrichtenversand und -empfang kann in Transaktionen eingebettet werden.
-Topics können als dauerhaft gekennzeichnet werden => dasselbe wie persistente Nachrichten.
 
 ## Anwendungsfälle
 <table>
@@ -1021,49 +792,24 @@ Topics können als dauerhaft gekennzeichnet werden => dasselbe wie persistente N
 </tr>
 </table>
 
-## Vergleich Synchron vs. asynchron
-
-<table>
-<tr>
-<th>Synchron</th>
-<td><img src="Bilder/JMS_Synchrone_API.png"></td>
-</tr>
-<tr>
-<th>Asynchron</th>
-<td><img src="Bilder/JMS_Asynchrone_API.png"></td>
-</tr>
-</table>
-
-Bei Synchroner API ist Client blockiert, bis die Bestellung/Anfrage abgearbeitet ist.
-- Hat jeder Service eine Verfügbarkeit von 99,5% ist die Gesamtverfügbarkeit (99,5%)<sup>3</sup>= 98,5%
-- Bei 1 Services (99,5)<sup>10</sup>=95,1%
-- usw.
-
-
 
 # Verteilte Transaktionen
 
-Verteilte Transaktionen sind Transaktionen, welche über mehrere transaktionale Systeme involviert sind.
+Transaktionen über mehrere transaktionale Systeme
 
 <img src="Bilder/Verteilte_Transaktion_Beispiel_Oracle_IBM.png" width=400>
 
 ## ACID
 
 - A–Atomar
-    - Eine Transaktion wird komplette oder gar nicht ausgeführt (commit oder abort)
+    - ausführung komplette oder gar nicht (commit oder abort)
 - C–Konsistent
-    - Eine Transaktion überführt einen konsistenten Zustand in einer anderen konsistenten Zustand.
-    - Wird durch Transaktionsdesign realisiert
+    - Transaktion überführt konsistenten Zustand in anderen konsistenten Zustand
 - I–Isoliert
-    - Eine Transaktion läuft isoliert, wenn sie den selben Effekt hat, egal ob sie parallel mit anderen Transaktionen oder alleine abläuft.
-    - Wenn ich eine isolierte Umbuchung mache ist das Ergebnis erst nach Ende der Transaktion sichtbar
-    - Isolierungsstufen / Isolierungsgrade
-        - READ COMMITTED
-        - REPEATABLE READ
-        - SERIALIZABLE
+    - Seiteneffektfrei (kann Nebenläufig ausgeführt werden)
 - D–Dauerhaft
-    - Die Änderungen einer Transaktion sind nach der Transaktion dauerhaft gespeichert.
-    - Die dauerhafte Speicherung der Daten muss auch nach einem Systemfehler garantiert sein.
+    - Änderungen nach Transaktion dauerhaft gespeichert
+    - muss auch nach Systemfehler garantiert sein
 
 ACID kann nur von relationalen Datenbanken garantiert werden. NoSQL-Datenbanken garantieren nicht alle ACID-Funktionalitäten. NoSQL nutzt häufig BASE.
 
@@ -1078,7 +824,7 @@ ACID kann nur von relationalen Datenbanken garantiert werden. NoSQL-Datenbanken 
 <table>
 <tr>
 <td><img src="Bilder/Verteilte_Systeme_Transaktionsmanager_Schematischer_Ablauf.png" width=300></td>
-<td>Diese verteilte Transaktion muss von außen gesteuert werden<br>Die beteiligten Systeme, müssen dafür ihre Autonomie über das Transaktionsverfahren aufgeben!</td>
+<td>beteiligten Systeme geben Autonomie auf</td>
 </tr>
 <tr>
 <td><img src="Bilder/Verteilte_Systeme_Transaktionsmanager_Ablauf.png" width=400></td>
@@ -1093,19 +839,13 @@ ACID kann nur von relationalen Datenbanken garantiert werden. NoSQL-Datenbanken 
 
 <img src="Bilder/Verteilte_Systeme_Transaktionsphasen.png">
 
-Phasen:
-
-1. Prepare Phase: Alle werden befragt ob sie den Commit machen können
-- Uncertain Phase (Wenn hier was schief läuft ist die Bestätigung da aber die Transaktion nicht durch)
-    - Wenn hier was schief läuft "stehen" alle Beteiligten
-2. Commit Phase: Er sagt okay vollzieht den Commit oder alle zurückrollen
 
 ## X/Open-Transaktionsmodell
 
 
-- Das Anwendungsprogramm initiiert Transaktionen über das TX Interface.
-- Der Transaktionsmanager koordiniert alle Transaktionen und stellt sicher, dass sie korrekt abgeschlossen werden.
-- Die Resource Manager führen die eigentlichen Operationen (Lesen, Schreiben) aus und werden über das XA Interface in die Transaktion eingebunden.
+- Anwendungsprogramm initiiert Transaktionen über TX Interface.
+- Transaktionsmanager koordiniert Transaktionen
+- Die Resource Manager führen Operationen (Lesen, Schreiben) aus
 ## BASE
 
 - BA = Basically Available 
@@ -1113,7 +853,6 @@ Phasen:
 - S = Soft State 
     - States können sich über äußere Einflüsse andern
 - E = Eventually Consistent 
-    - Nicht eventuell sondern Irgendwann Konsistent
     - Zustand des Systems wird schrittweise über alle Knoten repliziert.
         - System wird nach und nach konsistent
 
@@ -1121,17 +860,14 @@ Beispiel der Microservice Architektur => Nicht mit 2-Phasen-Transaktion umsetzba
 
 ## SAGA - Transaktionsmodell
 
-Keine Abkürzung => Geschichte Sage
+
 Sequenz von Transaktionen, welche Dinge aktualisieren 
 Jede Änderungsoperation die ich habe muss eine Rückgängigkeitsmöglichkeit haben
-"Ich muss mich selbst darum kümmern, dass die Dinge rückgängig machbar sind"
 >=> Aufteilung einer verteilten Transaktion in lokale Transaktionen.
 
 
 
 <img src="Bilder/Verteilte_Systeme_SAGA_Transaktionsmodell.png">
-
-> Die Gesamten kleinen Transaktionen sind die Saga. Wenn etwas schief geht bei Schritt (5) müssen überall Kompensierende Transaktionen aufgerufen werden können, welche Schritt 1-4 rückgängig machen können.
 
 ### Pattern: Orchestrierung
 
@@ -1139,45 +875,28 @@ Merkhilfe => Orchester mit Dirigent => Ohne Dirigent kann Orchester nicht spiele
 
 <img src="Bilder/Verteilte_Systeme_SAGA_Orchestrierung.png" width=400>
 
-Hier nimmt der OrderService den Platz als Orchestrator/Dirigent ein. Über ihn laufen alle Prozessabläufe.
-
 Nachteile:
-- Sollte der Dirigent ausfallen kann das gesamte System nichtmehr korrekt arbeiten, da die Anweisungen fehlen
-- Außerdem entsteht durch den Dirigent ein Flaschenhals, da der Dirigent alle Prozesse stattfinden abarbeiten muss, wodurch der Durchsatz ab einem gewissen Punkt sehr wahrscheinlich darunter leidet.
+- System abhängig von "Dirigent"
+- "Dirigent" = "Flaschenhals"
 
 ### Pattern: Choreographie
 
-Merkhilfe => Balett => Jeder weiß was er zu tun hat und kuckt nur auf seine Nachbarn ob das klappt
-Komponenten organisieren sich selbst
+Merkhilfe => Balett => Jeder weiß was er zu tun hat (abschauen ob bei Nachbar alles klappt)
 
 <img src="Bilder/Verteilte_Systeme_SAGA_Choreographie.png">
-
-Jeder Service kommuniziert über bestimmte Events/Aufrufe und arbeitet nur eine Aufgabe ab ohne das große Ganze zu kennen.
 
 
 ## CAP-Theorem
 
-**Sehr wichtig!!!**
-
 <img src="Bilder/Verteilte_Systeme_CAP_Theorem.png">
 
-- C - Consistency (Konsistenz )
-    - Alle Clients sehen zum gleichen Zeitpunkt die gleichen Daten
+- C - Consistency (Konsistenz)
 - A - Availability (Verfügbarkeit)
-    - Alle Clients können jederzeit Lese- und Schreibzugriffe durchführen, da stets vom System beantwortet werden
+    - jederzeit Lese- und Schreibzugriffe
 - P - Partition Tolerance (Ausfalltoleranz)
-    - Das System kann trotz des Ausfalls einzelner Knoten(bzw. wenn einzelne Knoten nicht mehr miteinander kommunizieren können), als Ganzes weiterarbeiten.
-> **Man kann immer nur 2 Haben (CA, CP, AP)**
+    - System kann trotz Ausfalls einzelner Knoten weiterarbeiten
 
-- CP – Anforderung
-    - Wenn man Konsistenz und Toleranz gegenüber Ausfällen fordert, kann man keine Verfügbarkeit garantieren.
-- CA – Anforderung
-    - Wenn man Konsistenz und Verfügbarkeit garantieren möchte, darf es zu keinen (Teil-) Ausfällen kommen.
-- AP – Anforderung
-    - Wenn ein System verfügbar und tolerant gegenüber (Teil-) Ausfällen (des Netzwerks) sein soll, kann keine Konsistenz zugesichert werden
-
-
-
+> **immer nur 2 möglich (CA, CP, AP)**
 
 # REST (Representational State Transfer)
 

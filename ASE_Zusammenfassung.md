@@ -1,5 +1,45 @@
 ## Advanced Software Engineering Zusammenfassung 
 
+Klausurthemen:
+
+Entwurfsprinzipien
+
+software-architektur styles / Pattern
+
+Design-Pattern
+
+Webservices Old styl wsdl soap
+
+REST, wieso im Vergleich zu anderen assync Technologien wie RMI
+
+REST realisieren: spring
+
+Rest erklären können warum was etc. Spring
+
+Single-sign on
+
+transaktionen, verteilte (Tranaktionsprotokoll)
+
+2 Phasen commit
+
+Was ist Kafka?
+
+Domain Driven Design
+
+CAP-Theorem
+
+12-Faktor apps, was ist cloud enabled, auf was achten, wenn Vorteile in cloud nutzen
+
+desired State, orchestrierungsplatform für Docker
+
+Kubernetes -> self healing, skalierbarkeit, versucht gewünschten Zustand herzustellen
+
+Single Sign on
+
+Keycloak
+
+
+
 # Patterns 
 ## Eigenschaften
 - basieren auf realen Designs

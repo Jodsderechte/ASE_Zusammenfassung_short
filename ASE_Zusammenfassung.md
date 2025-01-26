@@ -943,39 +943,22 @@ Merkhilfe => Balett => Jeder weiß was er zu tun hat (abschauen ob bei Nachbar a
 
 ## Motivation für REST
 Motivation = viele Programme innerhalb einer Firma
-Benötigt wird ein "einheitliches" Kommunikationsprotokoll, welches von allen Anwendungen unerstützt wird.
-=> Http
-=> JSON / XML => Programmiersprachenunabhängig
+"einheitliches" Kommunikationsprotokoll weitreichende Unterstützung
 
-## Rest als Beschreibungsformat
-Rest ist keine Architektur, sondern ein Rahmen für einen Architekturstil!
-> Häufig Client/Server Architektur auf Basis von HTTP als Trägerprotokoll
->> RESTful HTTP
-
-**Rest schreibt kein Protokoll vor, wird aber i.d.R mit HTTP verwendet**
-
-## Exkurs HTTP
-
-HTTP ist ein einfaches Textbasiertes Client-Server-Protokoll
-
-GET, POST, PUT, DELETE, etc. => HTTP Aufrufe
-
-Rest kennt nur Ressourcenbegriff
-Ressource ist alles auf das zugegriffen oder verändert werden kann
+**schreibt kein Protokoll vor, wird aber i.d.R mit HTTP verwendet**
 
 ## Fünf Prinzipien von REST
-1. Ressourcen besitzen eine eindeutige ID (adressable ressources)
-    - Bei RESTful HTTP sind das URLs
-2. Ressourcen können unterschiedliche Repräsentationen besitzen
-    - Bei RESTful HTTP ist das oft JSON oder XML
+1. Ressourcen besitzen eindeutige ID (adressable ressources)
+    - RESTful HTTP = URLs
+2. unterschiedliche Ressourcen Repräsentationen
+    - RESTful HTTP = JSON oder XML
 3. Standartisierte Methoden
-    - Bei RESTful HTTP sind das die HTTP-Methoden GET, POST, PUT, DELETE
-4. Statuslose Kommunikation
+    - RESTful HTTP = GET, POST, PUT, DELETE
+4. Stateless Kommunikation
     - HTTP ist zustandslos
 5. Hypermediaverwendung
     - Hypermedia As The Engine Of Application State (HATEOAS)
-    - Ressourcen können verknüpft werden über Links
-    - Wird von den meisten REST-Anwendungen nicht verwendet
+    - Ressourcenverknüpfung über Links
 
 ## Architekturprinzip: Adressierbarkeit
 
@@ -984,46 +967,23 @@ Adressierung über URI
 => Adressierung über HTTP
 http://example.com/kunde?name=Harry&plz=66482
 
-- ```http``` entspricht Protokoll
-- Standart Port ist 80
-- ```Kunde``` entspricht Ressource bzw. Prad zu Ressource
-- ```name=Harry&plz=66482``` ist der Query-String
-
-
-Da jeses Objekt eine URI besitzt, können Ressourcen verlinkt werden (JSON-FORMAT)
-```{json}
-{
-    "name": "Luke Skywalker",
-    "hair_color": "blond",
-    "homeworld": "https://swapi.dev/api/planets/1/",
-    "films": [
-        "https://swapi.dev/api/films/2/",
-        "https://swapi.dev/api/films/6/",
-        "https://swapi.dev/api/films/3/",
-        "https://swapi.dev/api/films/1/",
-        "https://swapi.dev/api/films/7/"
-    ]
-}
-```
 
 ## Repräsentationen
 
-Ressource ist eine Abstraktion, von der bei Bedarf eine Repräsentation erzeugt wird
 ```{json}
 {
     'name' : 'Albert'
     'id' : '42'
 }
 ```
-> Repräsentation einer Person durch ID und Name
+> Repräsentation (Person) durch ID und Name
 
 ### Repräsentationsanforderung
-Clients können über URLs Ressourcen identifizieren und übebr HTTP-Methoden abrufen
-Clients geben in der Regel die Repräsentationsform an, die sie erwarten
+
 ```
 GET products/143 HTTP/1.1
 Host: www.example.com
-Accept: application/xml, application/json => Repräsentationsform, welche akzeptiert wird
+Accept: application/xml, application/json => akzeptierte Repräsentationsform
 ```
 
 ## Standartisierte Methoden
@@ -1032,7 +992,7 @@ Accept: application/xml, application/json => Repräsentationsform, welche akzept
 **Nur POST ist nicht idempotent**
 
 Idempotent => Hat einmal eine Wirkung, beim zweiten mal jedoch keine
-> Beispiel |-3| = 3 => ||-3|| = 3 => Der zweite Betrag hat keine Wirkung
+> Beispiel |-3| = 3 => ||-3|| = 3 => zweite Betrag hat keine Wirkung
 
 Als Daumenregel gilt für CRUD(Create, Read, Update, Delete)
 <table>
@@ -1073,174 +1033,51 @@ Als Daumenregel gilt für CRUD(Create, Read, Update, Delete)
 </table>
 
 
-## Statuscodes
-Der Server kann durch HTTP-Statuscodes Informationen an den Client zurückgeben
-
-|Statuscode | Wirkungsbereich |
-|:---:|---|
-|1xx    |   dient Informationszwecken und signalisiert, dass die Bearbeitung noch nicht abgeschlossen ist|
-|2xx    |   signalisiert, dass die Bearbeitung erfolgreich abgeschlossen wurde
-|3xx    |   Zeigt Umleitungen an
-|4xx    |   wird für Client-seitige Fehler benutzt
-|5xx    |   signalisieren Fehler, die bei der Bearbeitung der Anfrage auf dem Server aufgetreten sind.
-
-### Wichtige Statuscodes
-
-<img src="Bilder/REST_Wichtige_HTTP_Statuscodes.png" width=400>
-
-
 ## Richardson Maturity Model
-Kathegorieren klassifizieren RESTful-Anwendungen nach Reifegrad
 
 <img src="Bilder/REST_Richardsons_Maturity_Model.png" width=300>
-
-- Level 0
-    - Http als Transportprotokoll
-
-- Level 1
-    - Ressourcen-Begriff wird verwendet => Ressourcen über eindeutige URLs angesprochen
-    
-- Level 2
-    - HTTP-Befehle werden für CRUD verwendet
-- Level 3
-    - HATEOAS => Ressourcen sind über Links verbunden und "selbstbeschreibend"
 
 ## Hypermedia 
 Hypermedia = Hypertext + Multimedia
 Links zur Verknüpfung verschiedener Medien
 
 
-## REST als Architekturstil
-
-- Definiert die Anwendung als ein System verteilter Ressourcen, welche über Links miteinander verbunden sind.
-- Im Zentrum einer REST-API stehen die Ressourcen, welche über URLs identifizierbar(über Links erreichbar) sind.
-- Um Ressource zu verändern muss Repräsentation der Ressource verändert an diese geschickt werden.
-
-## Best Practices 
-1. Nomen für Ressourcen im Plural
-    - ``` /vehicles => Fahrzeuge ```
-    - ```/vehicles/12 => Fahrzeug nummer 12 ```
-2. Keine Verben in URLs
-    - ``` /getColor ``` Schlecht
-    - ``` /color ``` Gut
-3. Kein / am Ende
-    - ``` /vehicles/data/power/ ``` Schlecht
-    - ``` /vehicles/data/power ```Gut
-4. Vorsicht bei Verwendung von Trennzeichen
-    - ``` /testAPI/dasIstNixGut ``` Schlecht
-    - ``` /testAPI/das_ist_nix_gut ``` Schlecht
-    - ``` /testAPI/das-ist-okay ``` Gut
-
-
-
 # Microservices
 
-Vorteile: Skalierbarkeit, Geschwindigkeit, Kopplung, etc.
+### Vorteile
 
-Nachteile: Automatisches Build- und Deployment notwendig, Komplexe Infrastruktur und Runntime (Cloud) notwendig
+▪ Skalierbarkeit
+▪ Geschwindigkeit
+▪ Kopplung
 
-## Typisches Implementierungsszenario für Produkt am Beispiel Monolith
+### Nachteile
 
-Benutzung CI-Pipeline
+▪ Automatisches Build- und Deployment notwendig
+▪ Komplexe Infrastruktur und Runntime (Cloud) notwendig
 
-<img src="Bilder/Microservices_CICD_Pipeline.png" width=400>
-
-## Conways Law
-
-*Any organization that designs a system (defined more broadly here than just information systems) will inevitably produce a design whose structure is a copy of the organization’s communication structure.* - Melvin Conway: “How Do Committees Invent?,” Datamation, April 1968
-
-> In Simpel: Die Struktur einer Organisation spiegelt sich in den Systemen wider, die sie entwickelt.
->> Wie ein Team organisiert ist und miteinander kommuniziert, beeinflusst direkt, wie die von diesem Team entwickelten Produkte und Systeme aussehen.
-
-## Teamrollen in Microservices 
-
-|Klassisch |Microservices|
-|-----|-----|
-| <img src="Bilder/Microservices_Klassische_Teams.png"> | <img src="Bilder/Microservices_Teamaufteilung_Microservices.png">
-
-
-## Definition Microservices
-Architekturstil bei der Anwendung in kleine Teile aufgeteilt wird, die unabhängig voneinander entwickelt werden und installiert werden
-
-<img src="Bilder/Microservices_Definition_Microservices.png" width=400>
-
-## Technische Kommunikation 
-
-Ein Microservice stellt seine Funktionalität über eine REST-API und/oder ein Topic zur Verfügung.
-
-<img src="Bilder/Microservices_Technische_Kommunikation.png" width=300>
-
-## Skalierungsmöglichkeiten
-
-<img src="Bilder/Microservices_Skalierungsmöglichkeiten.png" width=400>
-
-Daraus resultiert CAP-Theorem 
 
 ## The Twelve Factors
 
 Definiert Best Practices für Anwendungen
 |Nr|Beschreibung|Definition|
 |-----|-----|-----|
-|1  |   Codebase                    |   Eine im Versionsmanagementsystem verwaltete Codebase, viele Deployments
-|2  |   Abhängigkeiten              |   Abhängigkeiten explizit deklarieren und isolieren
-|3  |   Konfiguration               |   Die Konfiguration in Umgebungsvariablen ablegen
-|4  |   Unterstützende Dienste      |   Unterstützende Dienste als angehängte Ressourcen behandeln
+|1  |   Codebase                    |   Eine Codebase, viele Deployments
+|2  |   Abhängigkeiten              |   explizit deklarieren + isolieren
+|3  |   Konfiguration               |   in Umgebungsvariablen ablegen
+|4  |   Unterstützende Dienste      |   als angehängte Ressourcen behandeln
 |5  |   Build, release, run         |   Build- und Run-Phase strikt trennen
 |6  |   Prozesse                    |   Die App als einen oder mehrere Prozesse ausführen
-|7  |   Bindung an Ports            |   Dienste durch das Binden von Ports exportieren
+|7  |   Bindung an Ports            |   Dienste durch Binden von Ports exportieren
 |8  |   Nebenläufigkeit             |   Mit dem Prozess-Modell skalieren
 |9  |   Einweggebrauch              |   Robuster mit schnellem Start und problemlosen Stopp
-|10 |   Dev-Prod-Vergleichbarkeit   |   Entwicklung, Staging und Produktion so ähnlich wie möglich halten
+|10 |   Dev-Prod-Vergleichbarkeit   |   Entwicklung, Staging und Produktion so ähnlich wie möglich
 |11 |   Logs                        |   Logs als Strom von Ereignissen behandeln
-|12 |   Admin-Prozesse              |   Admin/Management-Aufgaben als einmalige Vorgänge behandeln
+|12 |   Admin-Prozesse              |   Admin/Management-Aufgaben: einmalige Vorgänge
 
-=> Wichtig für Cloud Anwendungen
-=> Je mehr erfüllt sind desto solider die Anwendung
-
-## Evolution 
-
-<img src="Bilder/Microservices_Entwicklung_Monolith_zu_Microservice.png" width=500>
-
-1. Matschball wird in Module unterteilt
-2. Trennung von Daten
-3. Module udn DBs werden geschnitten 
-
-## Definition Microservice
-
-Das Konzept der Microservices basiert auf der Idee, Anwendungen in kleinere, unabhängig voneinander arbeitende Dienste aufzuteilen. Dies ermöglicht flexibleres Entwickeln und Bereitstellen von Anwendungen, stellt jedoch keine universelle Lösung dar.
-
-### Vorteile
-
-▪ Ermöglicht die kontinuierliche Bereitstellung und den Einsatz großer, komplexer Anwendungen.
-▪ Dienste sind klein und leicht zu warten.
-▪ Dienste können unabhängig voneinander bereitgestellt werden.
-▪ Dienste sind unabhängig skalierbar.
-▪ Ermöglicht es Teams, autonom zu arbeiten.
-▪ Ermöglicht ein einfaches Experimentieren und die Übernahme neuer Technologien.
-▪ Bietet eine bessere Fehlerisolierung.
-
-### Nachteile
-
-▪ Es ist eine Herausforderung, die richtigen Dienste zu finden.
-▪ Verteilte Systeme sind komplex, was die Entwicklung, das Testen und die Bereitstellung erschwert.
-▪ Die Bereitstellung von Funktionen, die mehrere Dienste umfassen, erfordert eine sorgfältige Koordination.
-▪ Die Entscheidung, ob und wann die Microservice-Architektur eingeführt werden soll, ist schwierig.
-
-
-## Service als hexagonale Architektur
-
-Man nutzt REST für Benutzer und Queues für die Services untereinander
-Bsp. MQTT , ActiveMQ oder Kafka
-
-<img src="Bilder/Microservices_hexagonale_Architektur.png" width=300>
-
-Besteht aus Business-Logik, einem oder mehreren Adaptern, welche Schnittstellungen zu externen Anwendungen und anderen Diensten bilden.
 
 ## API-Gateway
 
-Ein API-Gateway beschreibt eine Verteilerschnittstelle / Zentrale Schnittstelle, welche auf die anderen Schnittstellen zugreift.
-
-Ein API-Gateway kann eine mehrschichtige modulare Architektur besitzen. Die gemeinsame Schicht implementiert Funktionen, die allen APIs gemeinsam sind, z.B. Authentifizierung
+eine Verteiler- / Zentrale Schnittstelle
 
 <img src="Bilder/Microservices_API_Gateway.png" width=400>
 
@@ -1248,27 +1085,16 @@ Ein API-Gateway kann eine mehrschichtige modulare Architektur besitzen. Die geme
 
 <img src="Bilder/Microservices_API_Gateway_Single_Entry_Point.png" width=400>
 
-
-
 # Domain Driven Design (DDD)
 
 
-Domain Driven Design beschreibt eine Vorgehensweise zur Modellierung komplexer Software im Großen und im Kleinen. Das Ziel hierbeit ist es Softwarelösungen im Einklang mit den Fachdomänen zu entwickeln. Ein Hauptmerkmal ist die Verwendung einer einheitlichen Sprache (ubiquitous language), welche von Fachexperten genutzt wird, durch welche Später die Bounded Contexts erstellt werden können.
-> Software ist in einer Anwendungsdomäne verankert d.h. Im Kontext einer Bankanwendung geht es bsp. fachlich um Geld, Kredite oder Aktien.
-
-
-> Jede Abteilung hat eigene Sicht auf die Komponenten und Akteure der Software. => Eigene Fachsprache
-
-**Im Zentrum steht der Bounded Context**
-
+▪ Vorgehensweise zur Modellierung komplexer Software
+▪ Softwarelösungen im Einklang mit Fachdomänen 
+▪ Verwendung einheitlicher Sprache (ubiquitous language)
 
 ## Ablauf Softwareentwicklung
 
-*"There is no sense in talking about the solution before we agree on the problem,
-and no sense talking about the implementation steps before we agree on the
-solution."* - Efrat Goldratt-Ashlag
-
-> In verständlich: Erst wenn die Anforderungen genau definiert sind lohnt es sicht ein Fachmodell zu entwickeln und erst dann sollte die Zielarchitektur geplant werden.
+> Erst wenn die Anforderungen genau definiert sind lohnt es sicht ein Fachmodell zu entwickeln und erst dann sollte die Zielarchitektur geplant werden.
 
 <img src="Bilder/DDD_Ablauf_Softwareentwicklung.png">
 
@@ -1276,33 +1102,30 @@ solution."* - Efrat Goldratt-Ashlag
 ## Arten von Komplexität
 
 1. Essentielle Komplexität
-    - Innenwohnende Komplexität der Fachdomäne => Software für eine komplexe Domäne ist zwangsläufig komplex
-    - Software für ein komplexes Bankensystem wird unwahrscheinlich simpel ausfallen
+    - Innenwohnende Komplexität der Fachdomäne
 2. Akzidentelle Komplexität
     - Ensteht zufällig durch:
-        - Misverständnissen bei Analyse der Fachdomäne
+        - Misverständnissen bei Analyse
         - Schlechtes Design / schlechte Architektur
-        - Einsatz von unpassender oder veralteter Technologie
-        - Sachen bauen, die nicht benötigt werden (Unnötige Fancy Lösungen etc.)
-
-
-|Arten von Komplexität|Entscheidungs- / Einflussbereiche|
-|-----|-----|
-| <img src="Bilder/DDD_Arten_von_Komplexität.png" width=400>| <img src="Bilder/DDD_Entscheidungs_Einflussbereiche_von_Komplexität.png" width=400> |
+        - unpassende/veralteter Technologie
+        - Unnötige Features/Lösungen
 
 
 ## Strategisches Design
-Strategisches Design = Definiert die Bounded Contexte und Kommunikation zwischen diesen
-> Beschäftigt sich mit dem Großen ganzen (Kontext Mapping , Zusammenarbeit zwischen Teams)
+Definiert Bounded Contexte
+> Beschäftigt sich mit Großem ganzen (Kontext Mapping , Zusammenarbeit zwischen Teams)
 
-Aufteilung der Fachdomäne in einzelne disjunkte Bounded Contexts
+Aufteilung der Fachdomäne
 
-Jeder Context nutzt eigene, der Anwendung entlehnte Sprache (**Ubiquitous Language**)
-Die Begriffe dieser Sprache sollten sowohl im Gespräch als auch in den Klassendiagrammen als auch im Sourcecode auftauchen.
+Context nutzt eigene, der Anwendung entlehnte Sprache (**Ubiquitous Language**)
+Begriffe eindeutig und immer gleich: 
+ - im Gespräch
+ - in den Klassendiagrammen
+ - im Sourcecode
 
 ### Bounded Context
-Der Bounded Context führt einen "geschützten" Raum ein mit einem vollständigen Fach- bzw. Prozessmodell und einer in dem Bereich "gesprochenen" (benutzten) Sprache.
-=> Bounded Context repräsentiert abgeschlossenes vollständiges System
+"geschützter" Raum mit vollständigen Fach- bzw. Prozessmodell und Sprache
+=> repräsentiert abgeschlossenes vollständiges System
 
 <img src="Bilder/DDD_Bounded_Context.png" width=400>
 
@@ -1310,256 +1133,36 @@ Architekturmodell für einen Bounded Context
 
 <img src="Bilder/DDD_Hexagonal_Architekturmodell_fuer_Bounded_Context.png" width=400>
 
-- Architekturkonzepte = Technologische Lösungskonzepte wie bsp. Software-Architekturen
-
 ### Context Mapping
 
-Teil des Strategischen Designs bei dem die Beziehungen der zuvor definierten Bounded Contexts definiert werden.
-
->Context Mapping = definiert Beziehungen und Datenaustausch zwischen den Bounded Contexts
->Faustregel: Ein fachlicher Kontext soll nur zu einem Team gehören, ein Team kann aber mehrere Kontexte besitzen.
-
-Beim Context-Mapping steht Form der Zusammenarbeit zwischen den Teams im Vordergrund:
-| Form der Zusammenarbeit |Bild|Beschreibung |
-|---|---|---|
-|Partnership| <img src="Bilder/DDD_Context_Mapping_Partnership.png" width=400> |Beide Teams sind voneinander Abhngig und können nur gemeinsam zum Ziel kommen. <br/> Verwenden i.d.R. CI
-|Shared Kernel | <img src="Bilder/DDD_Shared_Kernel.png" width=400>|Beteiligte Teams teilen sich einen Teil des Modells | 
-|Customer-Supplier | <img src="Bilder/DDD_Customer_Supplier.png" width=400> | Ein Team (Customer) ist direkt von einem anderen Team (Supplier) abhängig <br/>Supplier kann auf Bedürfnisse des Customer eingehen<br/> Supplier bestimmt letzendlich was Cusomer erhält (Up-Down-Stream-Verhältnis)
-|Conformist| <img src="Bilder/DDD_Conformist.png" width=400> | Spezialfall des Customer-Supplier-Mappings <br/>Customer hat keine Möglichkeit auf Supplier einzuwirken => Übernimmt Module 1zu1
-|Anticorruption Layer| <img src="Bilder/DDD_Anticorruption_Layer.png" width=400> | Defensive Mapping-Art <br/>Downstream-Team baut "Übersetzungsschicht"(Adapter) um Sprache von Upstreamteam in eigene zu übersetzen
-|Open Host Service| <img src="Bilder/DDD_Open_Host_Service.png" width=400> | Customer-Supplier-Mappings <br/>Upstream-Team stellt Schnittstelle(API) bereit, über die Informationen abgerufen werden können <br/> In der heutigen Zeit: OHS = API
-|Published Language| <img src="Bilder/DDD_Published_Language.png" width=400> | Spezialisierung OHS <br/> Upstream-Team stellt Schnittstelle zum definierten Dokumentaustausch bereit.
-|Seperate Ways| <img src="Bilder/DDD_Seperate_Ways.png" width=400> | Jedes Team entwickelt eigene Funktionalität => Häufig nicht rentabel, da viel Code doppelt gebaut werden muss
+Form der Zusammenarbeit zwischen den Teams
 
 ## Taktisches Design
 
-Das taktische Design beschäftigt sich damit das Innere der Bounded Contexts zu definieren.
-Taktisches Design = Wie sieht so ein Bounded Context aus
-> Beschäftigt sich mit der Modellierung innerhalb eines Bounded Contexts
-=> Entwurf und Aufbau eines Bounded Contexts
-- Zentrales Konstrukt: Aggregates
-    - Bestandteile: Entities, Value Objects 
-- Außerdem
-    - Services, Repositories (DBs), Factories
+Entwurf und Aufbau eines Bounded Contexts
 
 ### Aggregats
 
-Ein Agregate besteht aus einem oder mehreren Entities und kann auch Value Objects enthalten
-- Entity = Sache, welcher eindeutige ID zugewiesen ist
-    - Kann geändert werden
-- Value Object = Wert der nicht veränderbar ist
-    - Besitzt keine ID
-    - Beschreibung einer Sache
-
 Aggregates repräsentieren einen "Zusammenhang", besitzen somit auch Mutationsfunktionalität
-- Anemic Aggregates (Bestehen nur aus getter/setter) sollen vermieden werden
-
-Es gelten folgende vier Regeln für den Entwurf von Aggregaten
-1. Schütze fachliche Invarianten innerhalb von Aggregat-Grenzen
-    - Aufbau eines Aggregates muss aus den Geschäftsregeln abgeleitet sein
-2. Aggregate sollten "klein" sein
-    - Große Aggregate führen leicht zu Konflikten oder Inkonsistenten
-3. Andere Aggregate sollten nur über IDs referenziert werden
-    - Alle Aggregate referenzieren das zugehörige Produkt über dessen ID => keine direkten Referenzen!
-    - Dadurch soll das unbeabsichtigte Ändern eines Produkts verhindert werden
-4. Andere Aggregate werden unter Verwendung von Eventual Consistency geändert
-    - **Erinnerung: Eventually Consistent heißt nicht Eventuell Konsistent sondern irgendwann Konsistent**
-    - Andere Aggregate werden unter Verwendung von Eventually Consistency geändert
-
-=> CQS-Designprinzip kann helfen
 
 ### Command Query Responsibility Segregation (CQS)
-Aufteilung des Domänenmodells: Anderungen und Abfragen arbeiten auf zwei verschiedenen Repositorien(DBs)
+Aufteilung von Lesenden und Schreibenden Zugriffen
 Queries = Lesende Zugriffe
 - Lesen nur aus der Datenbank
 Commands = Schreibende Zugriffe
 - Das Command löst ein Event aus, welches die Lesedatenbank (irgendwann) aktualisiert
 <img src="Bilder/DDD_CQRS.png" width=400>
 
-> Dies wird häufig beim Event Sourcing verwendet 
-
 ## Collaborative Modeling
  Collaborative Modeling = Anforderungsermittlung, identifiziert Geschäftsprozesse, Rollen und Arbeitsgegenstände im Problemraum
 - z.B. Domain Story Telling
 
-## Wichtige Begriffe 
-Anticorruptionlayer = Adapter
-Open-Host Service = REST-Schnittstelle
-PL (Public Language) = JSON oder XML
-RPC = Sowas wie RMI oder SOAP
-Repository = Datenbank
-Value Object = DTO => Datenhalter/Datenobjekte
-Entity = Model
-Abstraktion = Fachsprache
-
-Invarianten = Schützen vor illegalen Zuständen
->Bsp. Artikel darf erst versendet werden wenn alle Bestellungen verarbeitet wurden => Doppelbuchungen vermeiden.
-
-# Einführung Softwarearchitekturen
-
-Softwarearchitektur hat keine allgemeine Definition
-
-Softwarearchitekt sollte Projekt komplett begleiten
-
-- Analyse von Geschäftsanforderungen
-- Festlegung der architektonischen Merkmalen ("Fähigkeiten")
-- Auswahl von Architekturmustern und -stilen
-- Erstellung von Komponenten (die Bausteine des Systems)
-
-|Architekt | Entwickler |
-| --- | --- |
-|Architekten sollten ein breites Wissen besitzen | Entwickler sollten ein tiefes Wissen Besitzen |
-
-<img src="Bilder/SA_Wissenspyramide.png" width=400>
+# Softwarearchitekturen
 
 ## Qualitätsattribute
 Software-Bewertung nach Qualitätsattributen (*itility)
 
 <img src="Bilder/SA_Qualitaetsattribute.png" width=400>
-
-
-## Definition nach iSAQB
-"*Softwarearchitektur definiert die grundlegenden Prinzipien und Regeln für die Organisation eines Systems, dessen Strukturierung in Bausteinen und Schnittstellen sowie deren Beziehungen zueinander wie auch zur Umgebung.*"
-
-Dadurch Richtlinien für den gesamten Systemlebenszyklus.
-
-## Baustein / Software Modul / Software Komponente 
-Baustein bietet Schnittstellen an, die er im Sinne eines Vertrages garantiert.
-
-Garantie gilt erst, wenn die benötigten Schnittstellen im Rahmen einer Konfiguration zur Verfügung gestellt werden(Export- und Import-Schnittstellen).
-
-<img src="Bilder/SA_Metamodell_Baustein.png" width=400>
-
-Ein (Super-)Baustein kann aus anderen (Sub-)Bausteinen bestehen und deren Beziehungen implementieren.
-
-### Schnitstellen 
-
-Eine Schnittstelle repräsentiert einen Zugangspunkt zu einem System oder dessen Baustein. Dabei beschreibt die Schnittstelle die Eigenschaften des Zugangspunktes (Attribute, Daten oder Funktionen).
-
-Ziel ist es diese Eigenschaften möglichst präzise mit allen notwendigen Aspekten zu definieren wie z.B.:
-- Syntax
-- Datenstrukturen
-- funktionales Verhalten
-- Fehlerverhalten
-- nichtfunktionale Eigenschaften
-- Nutzungsprotokolle der Schnittstelle
-- Technologien
-- Randbedingungen
-- Semantik
-
-|Komponente und Schnittstellen | Wem gehört die Schnittstelle
-| --- | --- |
-|<img src="Bilder/SA_Komponente_und_Schnittstelle.png" width=400>| <img src="Bilder/SA_Wem_gehört_die_Schnittstelle.png" width=400> |
-
-### Modularisierung 
-Modularisierung = Zerlegung eines Systems in Teilsysteme (Bausteine)
-
-Ziele
-- Beherrschbarkeit von Komplexität
-- Bessere Erweiterung und Wartbarkeit
-- Bessere Veränderung
-- Größere Wiederverwendbarkeit durch Rekombination von Modulen
-
-Modul = Zusammenfassung von Operationen und Daten zur Realisierung einer abgeschlossenen Aufgabe
-- Realisiert Geheimnisprinzip (Information Hiding)
-- Single-Responsibility-Prinzip
-
-Außenwelt kommuniziert über eindeutig definierte Schnittstelle mit dem Baustein (Exportschnittstelle)
-- Exportschnittstelle gibt an, welche Operationen und Daten anderen Module zur Verfügung gestellt werden
-
-Modul/Baustein hängt i.d.R von anderen Modulen ab (Importschnittstelle)
-- Importschnittstelle gibt an, welche Operationen und Daten von anderen Modulen benötigt werden
-
-## Entwurf von Softwarearchitekturen
-
-Struktur von Software degeneriert mit der Zeit zu "verfaultem" Design.
-Sympthome von "verfaultem" Design:
-- Starrheit = Änderungen sind schwierig und führen zu Modifikationen an einer Vielzahl von Komponenten bzw. Klassen
-- Zerbrechlichkeit = Änderungen an einer Stelle führen zu Fehlern an ganz anderen Stellen
-- Schlechte Wiederverwendbarkeit = Komponenten besitzen viele Abhängigkeiten von Programmteilen, welche im neuen Kontext nicht benötigt werden
-
-
-### Grundsätze
-
-1. Stakeholder beurteilt Erfolg einer Lösung => Software ist nur gut wenn der Kunde zufrieden ist
-2. Einfachheit gewinnt (KISS)
-3. Es gibt kein Patentrezept zur Lösung beliebiger Probleme => Wie gut etwas ist wird sich erst mit der Zeit herausstellen
-4. Voraussetzungen und Annahmen sollten explizit sein => Wenn etwas für mich klar ist muss es nicht für den Gegenüber klar sein
-5. Erwarte Änderungen und Fehler!
-
-### Grundprinzipien
-
-- Strebe nach loser Kopplung
-    - Kopplung durch Aufruf (Funktionsaufruf)
-    - Kopplung durch Benachrichtigungen (Events o.ä.)
-    - Kopplung durch Erzeugung
-    - Kopplung durch Daten/Datenstrukturen
-    - Kopplung über Zeit
-- Strebe nach Kohäsion (Dichte des Bauteils => Zeigt wie gut Baustein ist)
-- Trenne Verantwortlichkeiten
-- Zerlege Systeme in Module => Modul = in sich geschlossener Baustein
-- Nutze Abstraktion, Kapselung und Geheimnisprinzip
-- Lösung soll konsistent sein (Nicht 4 verschiedene JSON-Parser sondern einer, welcher Projektweit genutzt wird)
-- Vermeide Redundanz (DRY)
-- Vermeide Zyklische Abhängigkeiten
-> Beachte SOLID
-
-### Wichtige Design-Pattern (für Architektur)
-- Adapter
-- Observer und MVC
-- Decorator
-- Proxy
-- Fassade
-- State
-- Mediator (Bsp. API-Gateway/Broker)
-
-## Beschreibung und Kommunikation von Software-Architekturen
-
-| Darstellungsart | Beschreibungsmittel | Inhalt |
-| --- | --- | --- |
-| Kontextsicht(Kontextabgrenzung)| UML oder Kompositionsdiagramme evtl. Paketdiagramm <br> Listen von Nachbarsystemen und deren Schnittstellen | Inhalt = Beziehungen und Zusammenhänge mit dem Umfeld
-|Bausteinsicht |UML-Komponenten und -Paketsymbole evtl. high Level Klassendiagramme|Statische Strukturen eines Softwaresystems <br>Beziehungen zwischen Bausteinen|
-|Laufzeitsicht|UML-Aktivitätsdiagramme, -Kommunikationsdiagramme und -Sequenzdiagramme <br>evtl. Flussdiagramme, BPMN-Modelle|Zusammenwirken der Bausteine zur Laufzeit<br>Beziehungen zwischen Bausteinen|
-|Verteilungs- und Infrastruktursicht|UML-Deploymentdiagramme<br>evtl. UML-Paket und -Komponentendiagramme|Technische Ablaufumgebung<br>Beziehungen zwischen Bausteinen|
-
-## Bewertung von Softwarearchitekturen
-
-### Qualitative Bewertung
-
-ISO-Normen definieren Softwarequalität anhand von Merkmalen
-
-<img src="Bilder/SA_ISO_Softwarequalitaet.png" width=600>
-
-Beispiel für eine Solche Bewertung ist ATAM(Architecture Tradeoff Analysis Method)
-
-<img src="Bilder/SA_ATAM_Ablauf.png" width=400>
-
-Weitere Verfahren:
-- Technicher Durchstich (Klärung technischer Fragen)
-- Prototypen
-    - Wegwerfprototyp
-    - Analyseprototyp (Proof of Concept)
-    - Labormuster (Experiment zur Klärung konstruktionsbezogener Fragen)
-    - Pilotsystem (Kern des zukünftigen Systems)
-
-### Quantitative Bewertung 
-
-Überprüfung von Architekturregeln und Bewertung anhand von Metriken
-- Anforderungen
-- Quellcode
-- Erstellungsprozess einer Software
-- Fehler
-- Tests
-- Design
-- System
-
-# Software Architektur Patterns
-
-Software Architektur Patterns / Stile
-
-Zwei Kathegorien Monolithen(nicht verteilt) und Verteilt
-
-In der Praxis oft Hybridformen
 
 
 ## Monolith versus Verteilt
@@ -1578,17 +1181,10 @@ Fachlichkeit wird nicht beachtet
 
 Trennung nach Technischen Eigenschaften
 
-Fast lanes = Direkter Zugriff über 2 Layer => Macht man aus Performance Gründen (Meistens Fassacde)
-=> Machen Schichtenarchitektur kapput
-
-**Meistens angesehen als Antipattern**
-
-Architecture Sinkhole Antipattern (Fast nur noch Delegationen )
-
-Sind gut für:
+gut für:
 - Kleine Anwendungen
 - Web Anwendungen
-- Startpunkt für technische "Proff of Concepts"
+- Startpunkt für technische "Proof of Concepts"
 
 
 ### Pipe & Filter - Architektur
@@ -1609,26 +1205,17 @@ Consumeer = Endverarbeitung
 Ist Datengetrieben 
 Bsp. Kafka mit Filtern
 
-### Microkernal
+### Microkernel
 
 Core System mit Plug-In Componenten
 
 Beispiele: IDEs, Browser, FireFox, Chrome, etc.
 
-
-
-
-
 ## Verteilte Architekturen
 
 ### Service Based Architektur
 
-"Microservices für Arme"
-
-Charakteristisch ist eine zentrale Datenbank
-
-
-Im Grunde einfach Microservices mit einer zentralen Datenbank
+Microservices mit zentraler Datenbank
 
 Varianten bezüglich des User-Interfaces
 - Single Monolithic User Interface
@@ -1651,8 +1238,6 @@ Wird Typischerweise mit REST gemacht (Request Based Model)
 
 Mediator Topologie = Orchestrator
 
-
-
 ### Space-based Architektur 
 
 Mehrere parallele Prozessoren kommunizieren über einen gemeinsamen Speichert
@@ -1666,7 +1251,6 @@ Client stellt Request an Middleware
 WDSL, SOAP wurden hier verwendet
 
 BPMN Prozesse
-
 
 Konzentriert sich auf Wiederverwendung auf Unternehmensebene
 
@@ -1686,56 +1270,3 @@ Mesh-Frontend = Frontend was aus Bauteilen verschiedener Services bestehen
 Auch hier wieder Choreographie und Orchestrierung wichtig!
 
 Häufig SAGAs als Transaktionsmodell (Bei Orchestrierung)
-
-
-
-
-## Auswahl einer Architektur
-
-Entscheidungsmerkmale:
-Anwendungsbereiche
-
-Typische Fragestellungen 
-- Monolith vs. Verteilt
-- Wo liegen die Daten
-- Kommunikatonsstil: Synchron vs. Asynchron
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-
-# Wahrscheinlich nicht Prüfungsrelevant aber interessant
-API-Gateway = Früher. Session Dispatcher => Verteilt API-Anfragen auf die verteilten Backend-Dienste.
-
-
-
-Dispatcher oder Gateway => Verantwortlich für die Verteilung der Last auf die verschiedenen Server
-
-## Praktische Begriffe
-Resilient = Wiederstandsfähig
-
-
-[^1]: Fähigkeit, dass Funktionen oder Methoden in verschiedenen Objekten unterschiedlich ausgeführt werden können
-
-
-

@@ -169,7 +169,7 @@ Beispiele: IDEs, Browser, FireFox, Chrome, etc.
 
 ## Verteilte Architekturen
 
-Zusmmenschluss unabhängiger Computer
+Zusammenschluss unabhängiger Computer
 - keinen gemeinsamen Speicher
 - kommunizieren mit Nachrichten
 
@@ -182,12 +182,14 @@ Varianten bezüglich des User-Interfaces
 - Domain-Based User Interface
 - Service-Based User Interface
 
-Es gibt auch Mischformen
+Es gibt auch Mischformen.
+
 Wenn ein Service bsp. exklusiv Daten verwendet, kann dieser eine eigene DB verwenden
 
-Services können technisch oder anhand der Fachdomäne geschnitten werden
+Services können technisch oder anhand der Fachdomäne getrennt werden
 
 Passt gut zum DDD
+
 Simples Transaktiondesign durch ACID-Eigenschaft der zentralen DB
 
 ### Event-Driven Architektur
@@ -202,7 +204,7 @@ Mediator Topologie = Orchestrator
 
 Mehrere parallele Prozessoren kommunizieren über einen gemeinsamen Speichert
 
-Beispiel (Ticketverkauf bei Tylor Swift, Auktionshaus)
+Beispiel (Ticketverkauf bei Taylor Swift, Auktionshaus)
 
 Client stellt Request an Middleware
 
@@ -304,51 +306,6 @@ bietet Middleware-Services z.B.:
 bieten Standardfunktionen (vereinfacht verteilter Anwendungen)
 
 <img src="Bilder/Middleware_OSI.png" width=300>
-
-### Kommunikationsarten
-<table>
-<th>Synchron</th>
-<th>Asynchron</th>
-<tr>
-<td>http, REST</td>
-<td>fetch(JavaScript), JMS(Messaging)</td>
-</tr>
-</table>
-
-
-<table>
-<th>One-to-One</th>
-<th>One-to-Many</th>
-<tr>
-<td>http, Rest, fetch, JMS mit Queues</td>
-<td>Eventauslieferung beim Observer, JMS mit Topics</td>
-</tr>
-</table>
-
-#### Synchrone Kommunikation
-
-<img src="Bilder/Synchrone_Kommunikation.png" width=400>
-
-#### Asynchrone Kommunikation 
-
-<img src="Bilder/Asynchrone_Kommunikation.png" width=400>
-
-
-#### Kommunikationsfehler
-
-- Request verloren/verzögert
-- Response verloren/verzögert
-- Client/Server nicht verfügbar
-
-> Resend?, Timeout? etc.
-
-
-
-
-
-
-
-
 
 ---
 
@@ -548,7 +505,9 @@ Remote Proxy: Bsp. Remote Zugriff auf ein Objekt
 ### Adapter vs. Decorator vs. Proxy
 
 Adapter = Überbrückung zweier Schnittstellen
+
 Decorator = Erweitert Funktionalität des ursprünglichen Objekts
+
 Proxy = Besitzt selbe Schnittstelle und zeigt selbes Verhalten
 
 
@@ -716,7 +675,7 @@ abstrakte Klasse Figur deklariert Methode um Figur zu zeichnen. alle erbende Kla
 #### Lösung 1: Implementierung eines Farbattributes
 <img src="Bilder/Template_Pattern_Lösung_01.png" width=400>
 
-Nachteil: prepare-Aufruf kann werden vergessen => **erhöhte Komplexität**
+Nachteil: prepare-Aufruf kann vergessen werden => **erhöhte Komplexität**
 
 #### Beispiel: Implementierung einer getColor() Methode
 
@@ -868,7 +827,7 @@ Als Daumenregel gilt für CRUD(Create, Read, Update, Delete)
     </tr>
     <tr>
         <td>UPDATE</td>
-        <td>PUT bzw. PATCh</td>
+        <td>PUT bzw. PATCH</td>
         <td>updateBook()</td>
         <td>PUT /books/{id}</td>
     </tr>
@@ -895,6 +854,7 @@ Links zur Verknüpfung verschiedener Medien
 
 <img src="Bilder/Single-Sign-On-for-SDCC-users-for-local-web-services.png" width=600>
 ---
+
 # Verteilte Transaktionen (Trasaktionsprotokoll/CAP-Theorem)
 
 Transaktionen über mehrere transaktionale Systeme
@@ -916,8 +876,6 @@ Transaktionen über mehrere transaktionale Systeme
 ACID kann nur von relationalen Datenbanken garantiert werden. NoSQL-Datenbanken garantieren nicht alle ACID-Funktionalitäten. NoSQL nutzt häufig BASE.
 
 ## Transaktionsmanager
-
-<img src="Bilder/Verteilte_Transaktion_Beispiel_Oracle_IBM.png" width=300>
 
 ### Ablauf
 
@@ -1004,14 +962,50 @@ Merkhilfe => Balett => Jeder weiß was er zu tun hat (abschauen ob bei Nachbar a
 
 
 
-# Was ist Kafka? MISSING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# Apache Kafka 
+
+- Daten können angepasst auf den Use-Case gestaltet werden
+- Serialisierung über eigene Serializer-Implementierungen
+- Zugriff über Kafka-API
+
+## Nachrichten: 
+- werden auf Basis der Retention-Policy permanent abgelegt/gelöscht
+    - Zeitbasierte Löschung
+    - Logfile-Größen basierte Löschung
+- werden bei Auslesen/Konsumierung nicht gelöscht
+- inhalte werden als Byte-Datenstrom abgelegt
+- haben einen Offset
+    - Offset hat seine Gültigkeit innerhalb der Partition
+    - Offsets werden nicht zwischen Partitionen eines Topics verhandelt
+    - Mehrere Nachrichten können das gleiche Offset in einem Topic haben
+
+## Topics
+
+<img src="Bilder/kafkaTopics.PNG" width=400>
+
+## Partitionen
+
+- Topics werden in Partitionen zur Skalierung untergliedert
+- Partitionen werden im Cluster verteilt und repliziert
+
+<img src="Bilder/kafkaPartitionen.PNG" width=400>
+
+
+## Event Sourcing
+
+- Zustände nicht direkt in einer Datenbank abgelegt
+- Abstraktion von Nachrichten als Events
+- Übermittlung via Event Streaming-Plattform
+- Hier Apache Kafka
+- Problem: Wie (aktuellen) Zustand ermitteln?
+
 ---
 # Domain Driven Design (DDD)
 
 
-▪ Vorgehensweise zur Modellierung komplexer Software
-▪ Softwarelösungen im Einklang mit Fachdomänen 
-▪ Verwendung einheitlicher Sprache (ubiquitous language)
+- Vorgehensweise zur Modellierung komplexer Software
+- Softwarelösungen im Einklang mit Fachdomänen 
+- Verwendung einheitlicher Sprache (ubiquitous language)
 
 ## Ablauf Softwareentwicklung
 
@@ -1074,6 +1068,8 @@ Commands = Schreibende Zugriffe
 - Das Command löst ein Event aus, welches die Lesedatenbank (irgendwann) aktualisiert
 <img src="Bilder/DDD_CQRS.png" width=400>
 
+<img src="Bilder/cqrs.PNG" width=400>
+
 ## Collaborative Modeling
  Collaborative Modeling = Anforderungsermittlung, identifiziert Geschäftsprozesse, Rollen und Arbeitsgegenstände im Problemraum
 - z.B. Domain Story Telling
@@ -1084,14 +1080,14 @@ Commands = Schreibende Zugriffe
 
 ### Vorteile
 
-▪ Skalierbarkeit
-▪ Geschwindigkeit
-▪ Kopplung
+- Skalierbarkeit
+- Geschwindigkeit
+- Kopplung
 
 ### Nachteile
 
-▪ Automatisches Build- und Deployment notwendig
-▪ Komplexe Infrastruktur und Runntime (Cloud) notwendig
+- Automatisches Build- und Deployment notwendig
+- Komplexe Infrastruktur und Runntime (Cloud) notwendig
 
 
 ## The Twelve Factors
@@ -1167,7 +1163,7 @@ Container-Orchestrationssoftware
 
 
 
-<img src="KubernetesBegriffe.PNG">
+<img src="Bilder/KubernetesBegriffe.PNG">
 
 ---
 

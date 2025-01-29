@@ -83,9 +83,11 @@ Keine abhänhigkeit von modulen niedriger Ebene.
 > Abhängigkeiten von stabilem konkreten Code sind erlaubt.
 
 ## API-Design
-Benutzbarkeit = Leicht verständlich + erlernbar
-Effizienz = geringe Übertragung von Datenvolumen
-Zuverlässigkeit = Fehlerbehandlung
+Benutzbarkeit = Leicht verständlich + erlernbar  
+
+Effizienz = geringe Übertragung von Datenvolumen  
+
+Zuverlässigkeit = Fehlerbehandlung  
 
 **Wichtig:**
 - Konsistenz = Durchgängige Namensgebung
@@ -155,7 +157,9 @@ Besteht aus:
 Bsp. Compiler
 
 Producer = Datenquelle
+
 Transformer = Empfängt Daten, verarbeitet sie und sendet sie Weiter
+
 Consumeer = Endverarbeitung
 
 Ist Datengetrieben 
@@ -293,6 +297,7 @@ Aufteilung in:
 ### Middelware
 
 liegt zwischen OS der Rechner (Rechner A, B, C) und verteilter Anwendung 
+
 bietet Middleware-Services z.B.:
 
 - Namensdienst
@@ -709,9 +714,6 @@ Umsetzung unterscheidung in drei Arten:
 > **"MCV Pattern ist Observer => View ist Observer von Model"**
 
 ---
-
-
----
 # Webservices
 - XML Standards
 - Textbasiert ("Jede Programmiersprache kann Text")
@@ -750,6 +752,7 @@ Wird oft mit Spring realisiert.
 
 ## Motivation für REST
 Motivation = viele Programme innerhalb einer Firma
+
 "einheitliches" Kommunikationsprotokoll weitreichende Unterstützung
 
 **schreibt kein Protokoll vor, wird aber i.d.R mit HTTP verwendet**
@@ -853,7 +856,6 @@ Links zur Verknüpfung verschiedener Medien
 # Single-sign on/Keycloak
 
 <img src="Bilder/Single-Sign-On-for-SDCC-users-for-local-web-services.png" width=600>
----
 
 # Verteilte Transaktionen (Trasaktionsprotokoll/CAP-Theorem)
 
@@ -996,7 +998,6 @@ Merkhilfe => Balett => Jeder weiß was er zu tun hat (abschauen ob bei Nachbar a
 - Zustände nicht direkt in einer Datenbank abgelegt
 - Abstraktion von Nachrichten als Events
 - Übermittlung via Event Streaming-Plattform
-- Hier Apache Kafka
 - Problem: Wie (aktuellen) Zustand ermitteln?
 
 ---
@@ -1033,6 +1034,7 @@ Definiert Bounded Contexte
 Aufteilung der Fachdomäne
 
 Context nutzt eigene, der Anwendung entlehnte Sprache (**Ubiquitous Language**)
+
 Begriffe eindeutig und immer gleich: 
  - im Gespräch
  - in den Klassendiagrammen
@@ -1087,7 +1089,7 @@ Commands = Schreibende Zugriffe
 ### Nachteile
 
 - Automatisches Build- und Deployment notwendig
-- Komplexe Infrastruktur und Runntime (Cloud) notwendig
+- Komplexe Infrastruktur und Runtime (Cloud) notwendig
 
 
 ## The Twelve Factors
